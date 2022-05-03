@@ -10,7 +10,7 @@
 #include "components/chrono_amperometry.h"
 #include "components/formulas.h"
 #include "components/mcp4725_driver.h"
-#include "components/adccd masbst.h"
+#include "components/adc.h"
 
 extern MCP4725_Handle_T hdac;
 extern ADC_HandleTypeDef hadc1;
