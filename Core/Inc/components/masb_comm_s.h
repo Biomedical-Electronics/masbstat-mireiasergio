@@ -14,7 +14,7 @@
 
 #include "stm32f4xx_hal.h"
 #include "components/cyclic_voltammetry.h"
-#include "components/chronoamperometry.h"
+#include "components/chrono_amperometry.h"
 
 #define UART_BUFF_SIZE		50
 #define UART_TERM_CHAR		0x00
