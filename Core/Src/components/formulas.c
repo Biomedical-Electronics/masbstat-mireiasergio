@@ -1,10 +1,3 @@
-/*
- * stm32f4xx_adc.c
- *
- *  Created on: May 20, 2021
- *      Author: Albert
- */
-
 #include "components/formulas.h"
 
 const double u2b_m = 8.0 / 3.3;

@@ -57,11 +57,25 @@ void CA_sendData(void){ // Funcion para enviar datos
 	samplingPeriod = FALSE;
 	point++;
 
+<<<<<<< HEAD
 	uint32_t vADC=ADC_v(); // Compute vADC
 	double VCell = calculateVrefVoltage(vADC); // Calibracion
 
 	uint32_t iADC=ADC_i(); // Compute iADC
 	double ICell = calculateIcellCurrent(iADC);
+=======
+	uint32_t vADC = 0;
+
+	HAL_ADC_Start(&hadc1); // Iniciamos el ADC
+	HAL_ADC_PollForConversion(&hadc1, 100); // Conversion
+	uint32_t vADC = HAL_ADC_GetValue(&hadc1);  // Guardamos resultado
+	double VCell = calculateVrefVoltage(vADC); // Calibracion
+
+	HAL_ADC_Start(&hadc1);
+	HAL_ADC_PollForConversion(&hadc1, 100);
+	uint32_t vADC = HAL_ADC_GetValue(&hadc1);
+	double ICell = calculateIcellCurrent(vADC);
+>>>>>>> 4482eef (Chronoamperometry)
 
 	struct Data_S data; // Enviamos datos a la estructura
 	data.point = point;
