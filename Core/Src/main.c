@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "components/stm32main.h" //access to the setup and loop functions as well the myHandles structure
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -88,13 +88,19 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  struct Handles_S myHandles;  //to pass the different pointers to the Handles structure
+    myHandles.huart2 = &huart2; //huart pointer
+    myHandles.hadc1 = &hadc1; //i2c pointer
+    myHandles.htim3 = &htim3; //adc pointer
+    myHandles.hi2c1 = &hi2c1; //timer pointer
+  setup(&myHandles); // to call the setup function and pass the pointer to the Handles structure
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  loop();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
