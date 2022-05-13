@@ -24,9 +24,13 @@
 #include "components/stm32main.h"
 #include "main.h"
 
+
+// Macros
 #define FALSE	0
 #define TRUE	1
 
+
+// CA configuration structure that stores the parameters received from viSense-S
 struct CA_Configuration_S {
 
 	double eDC;
@@ -35,6 +39,8 @@ struct CA_Configuration_S {
 
 };
 
+
+//Prototypes
 void CA_start(struct CA_Configuration_S caConfiguration);
 void CA_sendData(void);
 
