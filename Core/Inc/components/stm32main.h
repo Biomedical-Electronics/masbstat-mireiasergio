@@ -9,11 +9,18 @@
 #include "components/dac.h"
 #include "components/ad5280_driver.h"
 
+
+// Macros
 #define	CV	0
 #define CA	1
 #define IDLE	2
 
-struct Handles_S {
+
+// Variable initialization
+uint32_t Estado;
+
+
+struct Handles_S {  // structure to handle the pointers
 	UART_HandleTypeDef *huart2;
 	I2C_HandleTypeDef *hi2c;
 	ADC_HandleTypeDef *hadc1;
