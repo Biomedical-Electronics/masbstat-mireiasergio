@@ -23,6 +23,7 @@ void Timer3_CV(void) {
 	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
 	htim3.Init.Period =cvConfiguration.eStep/cvConfiguration.scanRate;
 	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 
 	if (HAL_TIM_Base_Init(&htim3) != HAL_OK){
 		_Error_Handler(__FILE__, __LINE__);
@@ -53,6 +54,7 @@ void Timer3_CA(void) {
 	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
 	htim3.Init.Period =caConfiguration.eStep/caConfiguration.scanRate;
 	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 
 	if (HAL_TIM_Base_Init(&htim3) != HAL_OK){
 		_Error_Handler(__FILE__, __LINE__);
