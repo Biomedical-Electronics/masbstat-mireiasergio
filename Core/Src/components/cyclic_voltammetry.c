@@ -7,6 +7,7 @@
 
 #include "components/cyclic_voltammetry.h"
 #include "components/masb_comm_s.h"
+#include "components/adc.h"
 
 void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 	Vcell=cvConfiguration.eBegin;
