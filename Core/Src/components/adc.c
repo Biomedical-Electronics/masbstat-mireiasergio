@@ -4,6 +4,7 @@
  *  Created on: 4 may. 2022
  *      Author: sergioventeo
  */
+#include "stm32f4xx_hal.h"
 
 extern	ADC_HandleTypeDef	hadc1;
 
