@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file		cobs.h
   * @brief		Archivo de encabezado de (de)codificación en COBS.
-  * @author		Albert Álvarez Carulla
-  * @copyright	Copyright 2020 Albert Álvarez Carulla. All rights reserved.
+  * @author		Mireia Alibau, Sergio Venteo
+  * @copyright	Copyright 2022 Mireia Alibau, Sergio Venteo. All rights reserved.
   ******************************************************************************
   */
 #ifndef INC_COMPONENTS_COBS_H_
