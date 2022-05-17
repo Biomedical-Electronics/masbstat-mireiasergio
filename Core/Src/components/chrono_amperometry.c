@@ -15,6 +15,8 @@
 extern MCP4725_Handle_T hdac;
 extern ADC_HandleTypeDef hadc1;
 extern TIM_HandleTypeDef htim3;
+uint32_t point = 0; // Punto
+uint32_t counter = 0; // Contador
 
 volatile _Bool samplingPeriod = FALSE;
 
@@ -37,9 +39,6 @@ void CA_start(struct CA_Configuration_S caConfiguration) {
 
 	__HAL_TIM_SET_COUNTER(&htim3,0); // Reiniciamos el counter del timer
 	HAL_TIM_Base_Start_IT(&htim3); // E iniciamos el timer
-
-	uint32_t point = 0; // Punto
-	uint32_t counter = 0; // Contador
 
 	CA_sendData(); // Enviamos la primera medida
 
