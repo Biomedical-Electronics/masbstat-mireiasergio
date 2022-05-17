@@ -4,8 +4,8 @@
   * @brief		Archivo de encabezado del componente encargado de la 
   *             comunicación con el host. Versión simplificada del protocolo
   *             MASB-COMM.
-  * @author		Mireia Alibau, Sergio Venteo
-  * @copyright	Copyright 2022 Mireia Alibau, Sergio Venteo. All rights reserved.
+  * @author		Albert Álvarez Carulla
+  * @copyright	Copyright 2020 Albert Álvarez Carulla. All rights reserved.
   ******************************************************************************
   */
 

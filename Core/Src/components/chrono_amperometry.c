@@ -10,7 +10,7 @@
 #include "components/chrono_amperometry.h"
 #include "components/formulas.h"
 #include "components/mcp4725_driver.h"
-#include "components/adc.h"
+#include "components/adccd masbst.h"
 
 extern MCP4725_Handle_T hdac;
 extern ADC_HandleTypeDef hadc1;
@@ -62,7 +62,6 @@ void CA_sendData(void){ // Funcion para enviar datos
 
 	uint32_t iADC=ADC_i(); // Compute iADC
 	double ICell = calculateIcellCurrent(iADC);
-
 
 	struct Data_S data; // Enviamos datos a la estructura
 	data.point = point;
