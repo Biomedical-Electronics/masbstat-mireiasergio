@@ -85,14 +85,14 @@ void loop(void) {
 
 		switch (ESTADO) {
 		case CV:  // in case of CV, the CV_meas function is called
-			CV_meas(cvConfiguration);
+			CV_start(cvConfiguration);
 			Estado = IDLE;  // change the Estado variable to IDLE (2)
 			__NOP();
 			break;
 
 
 		case CA:
-			CA_meas(caConfiguration);
+			CA_start(caConfiguration);
 			Estado = IDLE;
 			__NOP();
 			break;
