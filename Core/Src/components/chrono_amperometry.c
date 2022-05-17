@@ -29,8 +29,8 @@ void CA_start(struct CA_Configuration_S caConfiguration) {
 	HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_SET); // Cerramos el rele
 
 
-	samplingPeriodMs = caConfiguration.samplingPeriodMs; // Periodo de muestreo
-	measurementTime = caConfiguration.measurementTime*1000; // En ms
+	uint32_t samplingPeriodMs = caConfiguration.samplingPeriodMs; // Periodo de muestreo
+	uint32_t measurementTime = caConfiguration.measurementTime*1000; // En ms
 
 
 	__HAL_TIM_SET_AUTORELOAD(&htim3,samplingPeriodMs * 10); // Fijamos el periodo
