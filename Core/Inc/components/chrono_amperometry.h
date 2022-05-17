@@ -15,7 +15,6 @@
 #ifndef INC_COMPONENTS_CHRONO_AMPEROMETRY_H_
 #define INC_COMPONENTS_CHRONO_AMPEROMETRY_H_
 
-
 #include "components/mcp4725_driver.h"
 #include "components/masb_comm_s.h"
 #include "components/ad5280_driver.h"
