@@ -17,6 +17,7 @@ extern ADC_HandleTypeDef hadc1;
 extern TIM_HandleTypeDef htim3;
 uint32_t point = 0; // Punto
 uint32_t counter = 0; // Contador
+uint32_t samplingPeriodMs;
 
 volatile _Bool samplingPeriod = FALSE;
 
@@ -29,7 +30,7 @@ void CA_start(struct CA_Configuration_S caConfiguration) {
 	HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_SET); // Cerramos el rele
 
 
-	uint32_t samplingPeriodMs = caConfiguration.samplingPeriodMs; // Periodo de muestreo
+	samplingPeriodMs = caConfiguration.samplingPeriodMs; // Periodo de muestreo
 	uint32_t measurementTime = caConfiguration.measurementTime*1000; // En ms
 
 
