@@ -5,8 +5,10 @@
  *      Author: sergioventeo
  */
 
+#include <stdint.h>
 #ifndef INC_COMPONENTS_CYCLIC_VOLTAMMETRY_H_
-#define INC_COMPONENTS_CYCLIC_VOLTAMMETRY_H_
+#define INC_COMPONENTS_CYCLIC_VOLTAMMETRY_H_3
+
 
 struct CV_Configuration_S {
 	double eBegin;
