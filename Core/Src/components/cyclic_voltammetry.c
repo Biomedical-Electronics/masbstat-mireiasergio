@@ -21,7 +21,7 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 	double SamplingPeriod=eStep/scanRate;
 
 
-	Timer3_CV(period);
+	Timer3_CV(SamplingPeriod);
 
 	uint8_t counter = 0;
 	uint8_t point = 0;
@@ -41,7 +41,7 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 		data.current = Ireal;
 		MASB_COMM_S_sendData(data);
 
-		counter = counter + samplingPeriodMs;
+		counter = counter + SamplingPeriod;
 		point++;
 
 		if (Vreal==vObjetivo) {
