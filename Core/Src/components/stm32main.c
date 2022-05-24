@@ -12,6 +12,8 @@ struct CA_Configuration_S caConfiguration; //we assign the CA configuration stru
 struct Data_S data;
 MCP4725_Handle_T hdac = NULL;
 
+uint32_t Estado;
+
 
 // setup function, to be called only when the program starts
 void setup(struct Handles_S *handles) {  //takes as parameter the Handles_S structure

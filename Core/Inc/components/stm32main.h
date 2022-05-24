@@ -17,7 +17,6 @@
 
 
 // Variable initialization
-uint32_t Estado;
 
 
 struct Handles_S {  // structure to handle the pointers
