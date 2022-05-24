@@ -10,8 +10,8 @@
 
 extern TIM_HandleTypeDef htim3;
 
-struct CA_Configuration_S caConfiguration;
-struct CV_Configuration_S cvConfiguration;
+extern struct CA_Configuration_S caConfiguration;
+extern struct CV_Configuration_S cvConfiguration;
 
 void Timer3_CV(void) {
 	HAL_TIM_Base_DeInit(&htim3);
@@ -52,7 +52,7 @@ void Timer3_CA(void) {
 	htim3.Instance = TIM3;
 	htim3.Init.Prescaler = 8399;
 	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim3.Init.Period =caConfiguration.eStep/caConfiguration.scanRate;
+	htim3.Init.Period =caConfiguration.samplingPeriodMs;
 	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 

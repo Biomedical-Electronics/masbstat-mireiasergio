@@ -104,7 +104,7 @@ int main(void)
     myHandles.huart2 = &huart2; //huart pointer
     myHandles.hadc1 = &hadc1; //i2c pointer
     myHandles.htim3 = &htim3; //adc pointer
-    myHandles.hi2c1 = &hi2c1; //timer pointer
+    myHandles.hi2c = &hi2c1; //timer pointer
   setup(&myHandles); // to call the setup function and pass the pointer to the Handles structure
   /* USER CODE END 2 */
 

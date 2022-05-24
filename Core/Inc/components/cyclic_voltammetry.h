@@ -7,7 +7,7 @@
 
 #include <stdint.h>
 #ifndef INC_COMPONENTS_CYCLIC_VOLTAMMETRY_H_
-#define INC_COMPONENTS_CYCLIC_VOLTAMMETRY_H_3
+#define INC_COMPONENTS_CYCLIC_VOLTAMMETRY_H_
 
 
 struct CV_Configuration_S {

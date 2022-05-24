@@ -24,7 +24,7 @@ struct Handles_S {  // structure to handle the pointers
 	UART_HandleTypeDef *huart2;
 	I2C_HandleTypeDef *hi2c;
 	ADC_HandleTypeDef *hadc1;
-	TIM_HandleTypeDef htim3;
+	TIM_HandleTypeDef *htim3;
 
 };
 
