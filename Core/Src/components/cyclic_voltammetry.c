@@ -8,6 +8,8 @@
 #include "components/cyclic_voltammetry.h"
 #include "components/masb_comm_s.h"
 #include "components/adc.h"
+#include "components/formulas.h"
+#include "components/timer.h"
 
 void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 	float Vcell=cvConfiguration.eBegin;
@@ -21,7 +23,7 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 	double SamplingPeriod=eStep/scanRate;
 
 
-	Timer3_CV(SamplingPeriod);
+	Timer3_CV();
 
 	uint8_t counter = 0;
 	uint8_t point = 0;
