@@ -5,7 +5,6 @@
 #include "components/ad5280_driver.h" //
 #include "components/mcp4725_driver.h"
 #include "components/i2c_lib.h"
-#include "components/dac.h"
 
 struct CV_Configuration_S cvConfiguration; // assign the CV configuration structure to cvConfiguration variable
 struct CA_Configuration_S caConfiguration; //we assign the CA configuration structure to caConfiguration variable
@@ -21,7 +20,6 @@ void setup(struct Handles_S *handles) {  //takes as parameter the Handles_S stru
 	HAL_Delay(500);
 
 	// pass the pointers
-	//setup_DAC();
 	I2C_init(handles->hi2c);
 
 	// potentiometer
@@ -87,7 +85,7 @@ void loop(void) {
 
 		switch (Estado) {
 		case CV:  // in case of CV, the CV_meas function is called
-			//CV_start(cvConfiguration);
+			cyclic_voltammetry(cvConfiguration);
 			Estado = IDLE;  // change the Estado variable to IDLE (2)
 			__NOP();
 			break;

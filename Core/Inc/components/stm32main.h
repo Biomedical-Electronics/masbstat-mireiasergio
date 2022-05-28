@@ -6,7 +6,6 @@
 #include "components/chrono_amperometry.h"
 #include "components/cyclic_voltammetry.h"
 #include "components/mcp4725_driver.h"
-#include "components/dac.h"
 #include "components/ad5280_driver.h"
 
 

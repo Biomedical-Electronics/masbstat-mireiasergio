@@ -25,21 +25,13 @@ void Timer3_CV(void) {
 	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 
-	if (HAL_TIM_Base_Init(&htim3) != HAL_OK){
-		_Error_Handler(__FILE__, __LINE__);
-	}
 
 	sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
 
-	if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK) {
-		 _Error_Handler(__FILE__, __LINE__);
-	}
 	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
 	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
 
-	if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK) {
-		 _Error_Handler(__FILE__, __LINE__);
-	}
+
 	HAL_TIM_Base_Start_IT(&htim3);
 
 }
@@ -56,21 +48,11 @@ void Timer3_CA(void) {
 	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 
-	if (HAL_TIM_Base_Init(&htim3) != HAL_OK){
-		_Error_Handler(__FILE__, __LINE__);
-	}
 
 	sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
 
-	if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK) {
-		 _Error_Handler(__FILE__, __LINE__);
-	}
 	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
 	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-
-	if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK) {
-		 _Error_Handler(__FILE__, __LINE__);
-	}
 
 	HAL_TIM_Base_Start_IT(&htim3);
 }
