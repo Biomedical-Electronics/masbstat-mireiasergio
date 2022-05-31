@@ -19,7 +19,7 @@ uint32_t point = 0; // Punto
 uint32_t counter = 0; // Contador
 uint32_t samplingPeriodMs;
 
-volatile _Bool samplingPeriod = FALSE;
+volatile _Bool samplingPeriodMs = FALSE;
 
 void CA_start(struct CA_Configuration_S caConfiguration) {
 
@@ -36,15 +36,17 @@ void CA_start(struct CA_Configuration_S caConfiguration) {
 
 	__HAL_TIM_SET_AUTORELOAD(&htim3,samplingPeriodMs * 10); // Fijamos el periodo
 	// ⚠ Solo si se fija una frecuecia de trabajo de 10 KHz para el timer,
-	// mutliplicar samplingPeriod por 10 ⚠
+	// mutliplicar samplingPeriodMs por 10 ⚠
 
 	__HAL_TIM_SET_COUNTER(&htim3,0); // Reiniciamos el counter del timer
 	HAL_TIM_Base_Start_IT(&htim3); // E iniciamos el timer
 
+	point=0;
+	counter=0;
 	CA_sendData(); // Enviamos la primera medida
 
 	while (counter <= measurementTime) { // Mientras que no se haya superado el tiempo total del experimento...
-		if (samplingPeriod == TRUE){ // y el tiempo entre muestras haya pasado...
+		if (samplingPeriodMs == TRUE){ // y el tiempo entre muestras haya pasado...
 			CA_sendData(); // enviamos los datos
 		}
 	}
@@ -54,7 +56,7 @@ void CA_start(struct CA_Configuration_S caConfiguration) {
 }
 
 void CA_sendData(void){ // Funcion para enviar datos
-	samplingPeriod = FALSE;
+	samplingPeriodMs = FALSE;
 	point++;
 
 	uint32_t vADC=ADC_v(); // Compute vADC
