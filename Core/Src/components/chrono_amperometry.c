@@ -16,6 +16,12 @@ extern MCP4725_Handle_T hdac;
 extern ADC_HandleTypeDef hadc1;
 extern TIM_HandleTypeDef htim3;
 uint32_t point = 0; // Punto
+uint32_t counter = 0;
+uint32_t samplingPeriodMs;
+uint32_t measurementTime=0;
+volatile _Bool condition = FALSE;
+
+
 
 void CA_start(struct CA_Configuration_S caConfiguration) {
 
@@ -33,10 +39,13 @@ void CA_start(struct CA_Configuration_S caConfiguration) {
 	// ⚠ Solo si se fija una frecuecia de trabajo de 10 KHz para el timer,
 	// mutliplicar samplingPeriodMs por 10 ⚠
 
+	__HAL_TIM_SET_COUNTER(&htim3,0); //Setting the counter
+
 
 	HAL_TIM_Base_Start_IT(&htim3); // E iniciamos el timer
 
-
+	point = 0;
+	counter = 0;
 	CA_sendData(); // Enviamos la primera medida
 
 	while (counter <= measurementTime) { // Mientras que no se haya superado el tiempo total del experimento...
