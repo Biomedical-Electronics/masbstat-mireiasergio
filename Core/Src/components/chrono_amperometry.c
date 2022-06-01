@@ -18,8 +18,7 @@ extern TIM_HandleTypeDef htim3;
 uint32_t point = 0; // Punto
 uint32_t counter = 0; // Contador
 uint32_t samplingPeriodMs;
-
-volatile _Bool samplingPeriodMs = FALSE;
+volatile _Bool condition =  FALSE; // Condition for the transmission of data
 
 void CA_start(struct CA_Configuration_S caConfiguration) {
 
@@ -27,11 +26,10 @@ void CA_start(struct CA_Configuration_S caConfiguration) {
 	float VDAC = calculateDacOutputVoltage(eDC); // Calculamos la tension
 	MCP4725_SetOutputVoltage(hdac, VDAC); // Fijamos Vcell a eDC
 
-	HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_SET); // Cerramos el rele
-
-
 	samplingPeriodMs = caConfiguration.samplingPeriodMs; // Periodo de muestreo
-	uint32_t measurementTime = caConfiguration.measurementTime*1000; // En ms
+	uint32_t measurementTime = caConfiguration.measurementTime*1000; // En s
+
+	HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_SET); // Cerramos el rele
 
 
 	__HAL_TIM_SET_AUTORELOAD(&htim3,samplingPeriodMs * 10); // Fijamos el periodo
@@ -41,12 +39,12 @@ void CA_start(struct CA_Configuration_S caConfiguration) {
 	__HAL_TIM_SET_COUNTER(&htim3,0); // Reiniciamos el counter del timer
 	HAL_TIM_Base_Start_IT(&htim3); // E iniciamos el timer
 
-	point=0;
-	counter=0;
+	point = 0;
+	counter = 0;
 	CA_sendData(); // Enviamos la primera medida
 
 	while (counter <= measurementTime) { // Mientras que no se haya superado el tiempo total del experimento...
-		if (samplingPeriodMs == TRUE){ // y el tiempo entre muestras haya pasado...
+		if (condition == TRUE){ // y el tiempo entre muestras haya pasado...
 			CA_sendData(); // enviamos los datos
 		}
 	}
@@ -56,7 +54,7 @@ void CA_start(struct CA_Configuration_S caConfiguration) {
 }
 
 void CA_sendData(void){ // Funcion para enviar datos
-	samplingPeriodMs = FALSE;
+	condition = FALSE;
 	point++;
 
 	uint32_t vADC=ADC_v(); // Compute vADC
@@ -71,7 +69,7 @@ void CA_sendData(void){ // Funcion para enviar datos
 	data.timeMs = counter;
 	data.voltage = VCell;
 	data.current = ICell;
-	counter = counter + samplingPeriodMs;
+	counter += samplingPeriodMs;
 
 	MASB_COMM_S_sendData(data);
 }
