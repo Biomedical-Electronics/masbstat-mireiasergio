@@ -13,6 +13,7 @@ extern TIM_HandleTypeDef htim3;
 extern struct CA_Configuration_S caConfiguration;
 extern struct CV_Configuration_S cvConfiguration;
 
+
 void Timer3_CV(void) {
 	HAL_TIM_Base_DeInit(&htim3);
 	TIM_ClockConfigTypeDef sClockSourceConfig;
@@ -31,7 +32,7 @@ void Timer3_CV(void) {
 	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
 	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
 
-
+	HAL_TIM_Base_Init(&htim3);
 	HAL_TIM_Base_Start_IT(&htim3);
 
 }
@@ -55,4 +56,8 @@ void Timer3_CA(void) {
 	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
 
 	HAL_TIM_Base_Start_IT(&htim3);
+}
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim3) {
+	wait = TRUE;
 }

@@ -12,6 +12,7 @@
 
 void Timer3_CV(void);
 void Timer3_CA(void);
+extern _Bool wait;
 
 
 #endif /* INC_COMPONENTS_TIMER_H_ */

@@ -11,64 +11,64 @@
 #include "components/formulas.h"
 #include "components/timer.h"
 
-void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
-	float Vcell=cvConfiguration.eBegin;
-	float vObjetivo=cvConfiguration.eVertex1;
-	HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_SET);
 
+void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
+	float Vcell = cvConfiguration.eBegin;
+	float vObjetivo = cvConfiguration.eVertex1;
+	HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_SET);
 
 	uint8_t cycles = cvConfiguration.cycles;
 	double scanRate = cvConfiguration.scanRate;
 	double eStep = cvConfiguration.eStep;
-	double SamplingPeriod=eStep/scanRate;
+	double SamplingPeriod = eStep / scanRate;
 
-
-	Timer3_CV();
-
-	uint8_t counter = 0;
 	uint8_t point = 0;
-	uint8_t i=0;
+	uint8_t i = 0;
+	wait = FALSE;
 
-	while (i<cycles) {
+	for (i = 0; i < cycles; i++) {
+		Timer3_CV();
+		while (wait) {
 
-		uint32_t vADC=ADC_v();
-		float Vreal=calculateVrefVoltage(vADC);
-		uint32_t iADC=ADC_i();
-		float Ireal=calculateIcellCurrent(iADC);
+			uint32_t vADC = ADC_v();
+			float Vreal = calculateVrefVoltage(vADC);
+			uint32_t iADC = ADC_i();
+			float Ireal = calculateIcellCurrent(iADC);
 
-		struct Data_S data;
-		data.point = point;
-		data.timeMs = counter;
-		data.voltage = Vreal;
-		data.current = Ireal;
-		MASB_COMM_S_sendData(data);
+			struct Data_S data;
+			data.point = point;
+			data.timeMs = point*(cvConfiguration.eStep/cvConfiguration.scanRate);
+			data.voltage = Vreal;
+			data.current = Ireal;
+			MASB_COMM_S_sendData(data);
 
-		counter = counter + SamplingPeriod;
-		point++;
+			point++;
 
-		if (Vreal==vObjetivo) {
-			if (vObjetivo==cvConfiguration.eVertex1) {
-				vObjetivo = cvConfiguration.eVertex2;
-			} else if (vObjetivo == cvConfiguration.eVertex2){
-				vObjetivo = cvConfiguration.eBegin;
-			} else if (i==cycles) {
-				HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_RESET);
+			if (Vreal == vObjetivo) {
+				if (vObjetivo == cvConfiguration.eVertex1) {
+					vObjetivo = cvConfiguration.eVertex2;
+				} else if (vObjetivo == cvConfiguration.eVertex2) {
+					vObjetivo = cvConfiguration.eBegin;
+				} else if (i == cycles) {
+					HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin,
+							GPIO_PIN_RESET);
+				} else {
+					vObjetivo = cvConfiguration.eVertex1;
+					i++;
+				}
+
 			} else {
-				vObjetivo = cvConfiguration.eVertex1;
-				i ++;
-			}
-
-		} else {
-			if (Vreal + eStep > vObjetivo) {
-				Vreal = vObjetivo;
-			} else {
-				if (Vcell > vObjetivo){
-					Vreal -= eStep;
-				}else{
-					Vreal += eStep;
+				if (Vreal + eStep > vObjetivo) {
+					Vreal = vObjetivo;
+				} else {
+					if (Vcell > vObjetivo) {
+						Vreal -= eStep;
+					} else {
+						Vreal += eStep;
+					}
 				}
 			}
 		}
-	}
 
+	}
 }
