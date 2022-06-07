@@ -26,7 +26,7 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 	uint8_t i = 0;
 	wait = FALSE;
 
-	for (i = 0; i < cycles; i++) {
+	while (i < cycles) {
 		Timer3_CV(SamplingPeriod);
 		while (wait) {
 
@@ -54,7 +54,6 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 							GPIO_PIN_RESET);
 				} else {
 					vObjetivo = cvConfiguration.eVertex1;
-					i++;
 				}
 
 			} else {
@@ -68,6 +67,7 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 					}
 				}
 			}
+			i++;
 		}
 
 	}
