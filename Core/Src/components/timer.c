@@ -13,6 +13,8 @@ extern TIM_HandleTypeDef htim3;
 extern struct CA_Configuration_S caConfiguration;
 extern struct CV_Configuration_S cvConfiguration;
 
+static _Bool wait = TRUE;
+
 
 void Timer3_CV(Period) {
 	HAL_TIM_Base_DeInit(&htim3);
@@ -58,5 +60,17 @@ void Timer3_CA(void) {
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim3) {
-	wait = FALSE;
+	Timer3_SetFlag();
+}
+
+void Timer3_ResetFlag() {
+	wait = TRUE;
+}
+
+void Timer3_SetFlag(){
+	wait =  FALSE;
+}
+
+_Bool Timer3_GetFlag(){
+	return wait;
 }

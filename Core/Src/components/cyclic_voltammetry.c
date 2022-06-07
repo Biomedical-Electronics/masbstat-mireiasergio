@@ -11,6 +11,7 @@
 #include "components/formulas.h"
 #include "components/timer.h"
 
+_Bool wait = TRUE; // Borrar
 
 void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 	float Vcell = cvConfiguration.eBegin;

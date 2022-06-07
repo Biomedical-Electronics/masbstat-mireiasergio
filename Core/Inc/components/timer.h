@@ -12,7 +12,9 @@
 
 void Timer3_CV(Period);
 void Timer3_CA(void);
-extern _Bool wait;
+void Timer3_SetFlag(void);
+void Timer3_ResetFlag(void);
+_Bool Timer3_GetFlag();
 
 
 #endif /* INC_COMPONENTS_TIMER_H_ */
