@@ -26,7 +26,7 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 	uint8_t i = 0;
 	wait = FALSE;
 
-	while (i < cycles) {
+	for (i=0; i < cycles; i++) {
 		Timer3_CV(SamplingPeriod);
 		while (wait) {
 
@@ -67,7 +67,6 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 					}
 				}
 			}
-			i++;
 		}
 
 	}
