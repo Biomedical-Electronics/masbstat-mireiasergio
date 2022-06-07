@@ -64,9 +64,6 @@ void CA_start(struct CA_Configuration_S caConfiguration) {
 
 	HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_RESET); // Abrimos el rele
 
-	point = 0;
-
-	counter = 0;
 }
 
 
