@@ -12,9 +12,13 @@
 #include "components/timer.h"
 
 extern TIM_HandleTypeDef htim3;
+extern MCP4725_Handle_T hdac;
 
 void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 	float Vcell = cvConfiguration.eBegin;
+	float VDAC = calculateDacOutputVoltage(Vcell);
+	MCP4725_SetOutputVoltage(hdac, VDAC);
+
 	float vObjetivo = cvConfiguration.eVertex1;
 	HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_SET);
 
@@ -58,7 +62,7 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 		point++;
 		counter += SamplingPeriod;
 
-		if (Vreal == vObjetivo) {
+		if (Vcell == vObjetivo) {
 			if (vObjetivo == cvConfiguration.eVertex1) {
 				vObjetivo = cvConfiguration.eVertex2;
 			} else if (vObjetivo == cvConfiguration.eVertex2) {
@@ -71,13 +75,13 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 			}
 
 		} else {
-			if (Vreal + eStep > vObjetivo) {
-				Vreal = vObjetivo;
+			if (Vcell + eStep > vObjetivo) {
+				Vcell = vObjetivo;
 			} else {
 				if (Vcell > vObjetivo) {
-					Vreal -= eStep;
+					Vcell -= eStep;
 				} else {
-					Vreal += eStep;
+					Vcell += eStep;
 				}
 			}
 		}
