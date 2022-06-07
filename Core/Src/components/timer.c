@@ -14,15 +14,15 @@ extern struct CA_Configuration_S caConfiguration;
 extern struct CV_Configuration_S cvConfiguration;
 
 
-void Timer3_CV(void) {
+void Timer3_CV(Period) {
 	HAL_TIM_Base_DeInit(&htim3);
-	TIM_ClockConfigTypeDef sClockSourceConfig;
-	TIM_MasterConfigTypeDef sMasterConfig;
+	TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+	TIM_MasterConfigTypeDef sMasterConfig = {0};
 
 	htim3.Instance = TIM3;
 	htim3.Init.Prescaler = 8399;
 	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim3.Init.Period =cvConfiguration.eStep/cvConfiguration.scanRate;
+	htim3.Init.Period =Period;
 	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 
@@ -59,5 +59,5 @@ void Timer3_CA(void) {
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim3) {
-	wait = TRUE;
+	wait = FALSE;
 }

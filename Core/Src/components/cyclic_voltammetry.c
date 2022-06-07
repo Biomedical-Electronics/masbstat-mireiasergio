@@ -27,7 +27,7 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 	wait = FALSE;
 
 	for (i = 0; i < cycles; i++) {
-		Timer3_CV();
+		Timer3_CV(SamplingPeriod);
 		while (wait) {
 
 			uint32_t vADC = ADC_v();
