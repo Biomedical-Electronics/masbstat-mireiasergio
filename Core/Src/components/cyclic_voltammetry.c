@@ -23,7 +23,7 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 	double eStep = cvConfiguration.eStep;
 	double SamplingPeriod = (eStep / scanRate)*1000;
 
-	uint8_t point = 0;
+	uint8_t point = 1;
 	uint8_t numbercycles = 0;
 
 	for (numbercycles=0; numbercycles < cycles; numbercycles++) {
