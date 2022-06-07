@@ -67,7 +67,6 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 					}
 				}
 			}
-			Timer3_ResetFlag();
 		}
 
 	}
