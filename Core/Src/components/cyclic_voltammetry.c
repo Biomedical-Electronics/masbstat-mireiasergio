@@ -11,7 +11,7 @@
 #include "components/formulas.h"
 #include "components/timer.h"
 
-_Bool wait = TRUE; // Borrar
+
 
 void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 	float Vcell = cvConfiguration.eBegin;
@@ -21,15 +21,14 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 	uint8_t cycles = cvConfiguration.cycles;
 	double scanRate = cvConfiguration.scanRate;
 	double eStep = cvConfiguration.eStep;
-	double SamplingPeriod = eStep / scanRate;
+	double SamplingPeriod = (eStep / scanRate)*1000;
 
 	uint8_t point = 0;
-	uint8_t i = 0;
-	wait = FALSE;
+	uint8_t numbercycles = 0;
 
-	for (i=0; i < cycles; i++) {
+	for (numbercycles=0; numbercycles < cycles; numbercycles++) {
 		Timer3_CV(SamplingPeriod);
-		while (wait) {
+		if (Timer3_GetFlag() == FALSE) {
 
 			uint32_t vADC = ADC_v();
 			float Vreal = calculateVrefVoltage(vADC);
@@ -50,7 +49,7 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 					vObjetivo = cvConfiguration.eVertex2;
 				} else if (vObjetivo == cvConfiguration.eVertex2) {
 					vObjetivo = cvConfiguration.eBegin;
-				} else if (i == cycles) {
+				} else if (numbercycles == cycles) {
 					HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin,
 							GPIO_PIN_RESET);
 				} else {
@@ -68,6 +67,7 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 					}
 				}
 			}
+			Timer3_ResetFlag();
 		}
 
 	}
