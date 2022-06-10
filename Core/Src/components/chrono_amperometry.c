@@ -16,11 +16,10 @@
 extern MCP4725_Handle_T hdac;
 extern ADC_HandleTypeDef hadc1;
 extern TIM_HandleTypeDef htim3;
-uint32_t point = 0; // Punto
+volatile uint32_t point = 0; // Punto
 uint32_t counter = 0;
 uint32_t samplingPeriodMs;
 uint32_t measurementTime=0;
-volatile _Bool condition = FALSE;
 
 
 
@@ -48,7 +47,7 @@ void CA_start(struct CA_Configuration_S caConfiguration) {
 	point = 1;
 	counter = 0;
 	CA_sendData(); // Enviamos la primera medida
-
+	Timer3_ResetFlag();
 	while (counter <= measurementTime) { // Mientras que no se haya superado el tiempo total del experimento...
 		if (Timer3_GetFlag() == FALSE){ // y el tiempo entre muestras haya pasado...
 			CA_sendData(); // enviamos los datos
@@ -90,5 +89,4 @@ void CA_sendData(void){ // Funcion para enviar datos
 	point++;
 	counter += samplingPeriodMs;
 
-	condition = FALSE;
 }

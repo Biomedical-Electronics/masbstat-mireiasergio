@@ -27,22 +27,19 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 	double eStep = cvConfiguration.eStep;
 	double SamplingPeriod = (eStep / scanRate) * 1000;
 
-	__HAL_TIM_SET_AUTORELOAD(&htim3,SamplingPeriod * 10); // Fijamos el periodo
-		// ⚠ Solo si se fija una frecuecia de trabajo de 10 KHz para el timer,
-		// mutliplicar samplingPeriodMs por 10 ⚠
+	__HAL_TIM_SET_AUTORELOAD(&htim3, SamplingPeriod * 10); // Fijamos el periodo
+	// ⚠ Solo si se fija una frecuecia de trabajo de 10 KHz para el timer,
+	// mutliplicar samplingPeriodMs por 10 ⚠
 
-		__HAL_TIM_SET_COUNTER(&htim3,0); //Setting the counter
+	__HAL_TIM_SET_COUNTER(&htim3, 0); //Setting the counter
 
-
-		HAL_TIM_Base_Start_IT(&htim3); // E iniciamos el timer
+	HAL_TIM_Base_Start_IT(&htim3); // E iniciamos el timer
 
 	uint8_t point = 1;
 	uint8_t counter = 0;
 	uint8_t numbercycles = 0;
 
-	Timer3_ResetFlag();
-
-	while(numbercycles < cycles) {
+	while (numbercycles <= cycles) {
 
 		while (Timer3_GetFlag() == TRUE) {
 		};
@@ -62,29 +59,51 @@ void cyclic_voltammetry(struct CV_Configuration_S cvConfiguration) {
 		point++;
 		counter += SamplingPeriod;
 
+		Timer3_ResetFlag();
+
+
 		if (Vcell == vObjetivo) {
 			if (vObjetivo == cvConfiguration.eVertex1) {
 				vObjetivo = cvConfiguration.eVertex2;
 			} else if (vObjetivo == cvConfiguration.eVertex2) {
 				vObjetivo = cvConfiguration.eBegin;
-			} else if (numbercycles == cycles) {
-				HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_RESET);
+			} else if (numbercycles==cycles){
+				HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_RESET); // Abrimos el rele
+
+				HAL_TIM_Base_Stop_IT(&htim3); // Paramos el timer
 			} else {
 				numbercycles++;
 				vObjetivo = cvConfiguration.eVertex1;
 			}
 
 		} else {
-			if (Vcell + eStep > vObjetivo) {
-				Vcell = vObjetivo;
-			} else {
-				if (Vcell > vObjetivo) {
-					Vcell -= eStep;
+			if (vObjetivo == cvConfiguration.eVertex1) {
+				if (Vcell + eStep > vObjetivo) {
+					Vcell = vObjetivo;
 				} else {
-					Vcell += eStep;
+					Vcell = Vcell + eStep;
+				}
+			}
+			if (vObjetivo == cvConfiguration.eVertex2) {
+				if (Vcell - eStep < vObjetivo) {
+					Vcell = vObjetivo;
+				} else {
+					Vcell = Vcell - eStep;
+				}
+			}
+			if (vObjetivo == cvConfiguration.eBegin) {
+				if (Vcell + eStep > vObjetivo) {
+					Vcell = vObjetivo;
+
+				} else {
+					Vcell = Vcell + eStep;
+
 				}
 			}
 		}
-		Timer3_ResetFlag();
+		//Timer3_ResetFlag();
 	}
+	//HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_RESET); // Abrimos el rele
+
+	//HAL_TIM_Base_Stop_IT(&htim3); // Paramos el timer
 }

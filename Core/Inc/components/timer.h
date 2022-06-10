@@ -10,7 +10,7 @@
 
 #include "components/masb_comm_s.h"
 
-void Timer3_CV(Period);
+void Timer3_CV(uint32_t Period);
 void Timer3_CA(void);
 void Timer3_SetFlag(void);
 void Timer3_ResetFlag(void);
