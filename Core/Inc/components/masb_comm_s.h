@@ -4,8 +4,8 @@
   * @brief		Archivo de encabezado del componente encargado de la 
   *             comunicación con el host. Versión simplificada del protocolo
   *             MASB-COMM.
-  * @author		Albert Álvarez Carulla
-  * @copyright	Copyright 2020 Albert Álvarez Carulla. All rights reserved.
+  * @author		Mireia Alibau, Sergio Venteo
+  * @copyright	Copyright 2022 Mireia Alibau, Sergio Venteo. All rights reserved.
   ******************************************************************************
   */
 
@@ -14,7 +14,7 @@
 
 #include "stm32f4xx_hal.h"
 #include "components/cyclic_voltammetry.h"
-#include "components/chronoamperometry.h"
+#include "components/chrono_amperometry.h"
 
 #define UART_BUFF_SIZE		50
 #define UART_TERM_CHAR		0x00
